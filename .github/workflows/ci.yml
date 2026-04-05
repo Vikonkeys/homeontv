@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: List project
+        run: xcodebuild -list -project HomeonTV.xcodeproj
+
+      - name: Build HomeonTV
+        run: xcodebuild -project HomeonTV.xcodeproj -scheme HomeonTV -configuration Debug -destination 'generic/platform=tvOS' CODE_SIGNING_ALLOWED=NO build
